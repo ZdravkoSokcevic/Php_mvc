@@ -3,7 +3,12 @@
     require __DIR__ . '/./Request.php';
     class Router implements Request
     {
-        use RequestTrait;
+        // use RequestTrait {
+        //     post as protected;
+        // };
+        use RequestTrait {
+          RequestTrait::__construct insteadof RequestTrait;
+        }
 
         private $route;
         private $action;
@@ -11,9 +16,14 @@
         private $_controller;
         private $_action;
         private $_server;
+        private $_get;
+        private $_post;
         public function __construct()
         {
+            // $this-> __rt_construct();
             $this->_server= $_SERVER; 
+            $this->_post= $_POST;
+            $this->_get= $_GET;
         }
 
         public function capsulateRequest()
@@ -25,6 +35,9 @@
         {
             $_req = array_values(array_filter(explode('/',$this->server('PATH_INFO'))));
             $_route = array_values(array_filter(explode('/', $this->route)));
+            if(empty($_req)) {
+                return $this->home();
+            }
             foreach ($_route as $i=>$path) {
                 $req= $_req[$i];
                 // check if not interpolation eg.. user/{id}
@@ -112,24 +125,60 @@
             throw new Exception('Controller does\'t exists');
         }
 
-        public function get($path, $action)
+        public function get($path='', $action)
         {
-            if(empty($path) || !is_string($path) || empty($action) || !is_string($action))
+            if(!is_string($path) || empty($action) || !is_string($action))
                 return;
+
+            if($this->server('REQUEST_METHOD')!=='GET') {
+                // ToDo check if router has method post
+                return;
+            }
+
             $this->route= $path;
             $this->action= $action;
+            if(empty($path)) {
+                return $this->home();
+            }
 
             $this->routeMatcher();
         }
 
-        public function post($path, $action)
+        public function post($path='', $action)
         {
-            if(empty($path) || !is_string($path) || empty($action) || !is_string($action))
+            if(!is_string($path) || empty($action) || !is_string($action))
                 return;
+
+            if($this->server('REQUEST_METHOD')!=='POST')
+                return;
+
             $this->route= $path;
             $this->action= $action;
+            if(empty($path))
+                return $this->home();
             $this->routeMatcher();
         }
+
+        public function home()
+        {
+            switch($this->server('REQUEST_METHOD'))
+            {
+                case 'GET':
+                {
+                    $this->parseQuery();
+                    break;
+                }
+                case 'POST':
+                {
+                    $this->parsePostRequest();
+                    $this->parseQuery();
+                    break;
+                }
+            }
+            pr($this);
+        }
+
+
 
 
     }
