@@ -3,12 +3,13 @@
     require __DIR__ . '/./Request.php';
     class Router implements Request
     {
+        use RequestTrait;
         // use RequestTrait {
         //     post as protected;
         // };
-        use RequestTrait {
-          RequestTrait::__construct insteadof RequestTrait;
-        }
+        // use RequestTrait {
+        //   RequestTrait::__construct insteadof RequestTrait;
+        // }
 
         private $route;
         private $action;
@@ -99,8 +100,8 @@
                 $res= $ref->invokeArgs($controller, $args);
             }
             else $res= $ref->invokeArgs($controller, $args);
-            echo $res;
-            die();
+            // echo $res;
+            // die();
         }
 
         public function parseAction()
@@ -166,6 +167,7 @@
                 case 'GET':
                 {
                     $this->parseQuery();
+                    $this->parseGetParams();
                     break;
                 }
                 case 'POST':
@@ -175,7 +177,10 @@
                     break;
                 }
             }
-            pr($this);
+            $this->parseAction();
+            $this->validateControllerExists();
+            // pr($this);
+            return $this->routeMatcher();
         }
 
 

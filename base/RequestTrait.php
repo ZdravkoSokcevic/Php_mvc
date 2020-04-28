@@ -64,6 +64,13 @@
 
         }
 
+        public function parseGetParams()
+        {
+        	foreach($this->_get as $k=> $val) {
+        		$this->$k= $val;
+        	}
+        }
+
 	}
 
 ?>

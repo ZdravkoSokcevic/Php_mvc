@@ -6,5 +6,10 @@
 		{
 			return $all;
 		}
+
+		public function home(Request $r)
+		{
+			pr($r->get('sdgsg'));
+		}
 	}
 ?>
