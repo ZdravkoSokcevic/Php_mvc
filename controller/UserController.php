@@ -9,7 +9,7 @@
 
 		public function home(Request $r)
 		{
-			pr($r->get('sdgsg'));
+			pr($r->input('key1'));
 		}
 	}
 ?>
