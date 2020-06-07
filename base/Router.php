@@ -183,7 +183,7 @@ class Router implements Request {
 		}
 		$this->parseAction();
 		$this->validateControllerExists();
-		// vd($this);
+
 		$this->routeMatcher();
         $this->dispatch();
 	}
