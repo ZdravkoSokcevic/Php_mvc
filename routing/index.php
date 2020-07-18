@@ -1,7 +1,10 @@
 <?php
+
+	if(!defined('ROOT')) {
+		require_once __DIR__ . './../index.php';
+	}
     // die();
     // var_dump($_SERVER);die();
-	require_once './base/helpers.php';
     $router= new Router();
     $router->get('', 'UserController@home');
     $router->post('', 'UserController@home');
