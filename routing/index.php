@@ -1,5 +1,11 @@
 <?php
 
+    if(php_sapi_name() == 'cli-server')
+    {
+        // var_dump($_SERVER);
+        // die();
+    }
+
 	if(!defined('ROOT')) {
 		require_once __DIR__ . './../index.php';
 	}
@@ -10,6 +16,6 @@
     $router->post('', 'UserController@home');
     $router->get('user/pera', 'UserController@loadAll');
     $router->get('user/{all}/{pera}', 'UserController@loadAll');
-    var_dump($router);die();
+    // var_dump($router);die();
 
 ?>

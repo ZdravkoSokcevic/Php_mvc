@@ -31,7 +31,6 @@
     */
     define('ROOT', __DIR__ . '/./../../');
 
-
     /*
     |   Main autoloader function
     |   Here we need to include all 

@@ -4,7 +4,7 @@
 	require_once __DIR__ . DIRECTORY_SEPARATOR . 'core' . DIRECTORY_SEPARATOR . 'framework' . DIRECTORY_SEPARATOR . 'Console' . DIRECTORY_SEPARATOR . 'Core.php';
 
 	$core = new Application\Console\Core();
-	
-	vd($_SERVER)
+
+	vd($_SERVER);
 
 ?>
