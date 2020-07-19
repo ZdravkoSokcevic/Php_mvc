@@ -30,19 +30,32 @@ class Router implements Request {
 	}
 
 	public function pathExploder() {
-		$_req = array_values(array_filter(explode('/', $this->server('PATH_INFO'))));
+		// vd($_SERVER);
+		// vd(explode('?', $this->server('REQUEST_URI'))[0]);
+		$_req = array_values(array_filter(explode('/', explode('?', $this->server('REQUEST_URI'))[0])));
 		$_route = array_values(array_filter(explode('/', $this->route)));
 		if (empty($_req)) {
 			return false;
 		}
+
+		/*
+		|
+		|	Notice (TEMPORARY SOLVED PROBLEM)
+		|	Not solved in case optional path, see ?
+		|
+		*/
+		if(count($_req) != count($_route))
+			return false;
+
 		foreach ($_route as $i => $path) {
 			$req = $_req[$i];
 			// check if not interpolation eg.. user/{id}
 			if (strpos($path, '{') !== false) {
 				$var = str_replace('{', '', $path);
 				$var = str_replace('}', '', $var);
+				
 				$this->_vars[$var] = $req;
-			} else {
+			} else if($req != $path){
 				if ($path !== $req) {
 					return false;
 				}
@@ -58,6 +71,7 @@ class Router implements Request {
 
 	public function routeMatcher() {
 		$match = $this->pathExploder();
+
 		if (!$match) {
 			return;
 		}
@@ -84,7 +98,8 @@ class Router implements Request {
 					$has_request = true;
 					$args[] = $this;
 				} else {
-					$args[] = $this->_vars[$value->name];
+					if(!empty($this->_vars))
+						$args[] = $this->_vars[$value->name];
 				}
 			}
 		}

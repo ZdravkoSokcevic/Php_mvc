@@ -1,13 +1,9 @@
-<?php
-	class Controller
-	{
-		protected $request;
-		public function __construct($req)
+<?php 
+		class Controller
 		{
-			$this->request= $req;
+			public function index()
+			{
+				// Your code goes here
+			}
 		}
-
-		
-	}
-
-?>
+	?>

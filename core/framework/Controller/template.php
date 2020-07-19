@@ -1,14 +1,14 @@
 <?php
-	$templ = <<< 'EOF'
-	namespace Application\Controllers;
-
-	class %s extends BaseModel
-	{
-		public function index()
+	return "
+	<?php 
+		require_once __DIR__ '/./Controller.php';
+		class %s extends Controller
 		{
-			// Your code goes here
+			public function index()
+			{
+				// Your code goes here
+			}
 		}
-	}
-
-	EOF
+	?>
+	";
 ?>

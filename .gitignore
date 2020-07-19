@@ -1,1 +1,5 @@
 .phpintel/*
+!controller/controller.php
+controller/*
+!model/Model.php
+model/*
