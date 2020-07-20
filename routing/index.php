@@ -14,8 +14,8 @@
     $router= new Router();
     // $router->get('', 'UserController@home');
     // $router->post('', 'UserController@home');
-    $router->get('/pera', 'PeraController@index');
-    $router->get('', 'UserController@home');
+    $router->get('', 'UserController@index');
+    $router->get('pera', 'PeraController@index');
     $router->get('user/pera', 'UserController@loadAll');
     $router->get('user/{all}/{pera}', 'UserController@loadAll');
     // var_dump($router);die();

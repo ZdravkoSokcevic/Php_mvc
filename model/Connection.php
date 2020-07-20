@@ -5,7 +5,7 @@
         private $conn_string;
         private function getConnString()
         {
-
+            
         }
         private function connection()
         {
