@@ -12,6 +12,8 @@
     // die();
     // var_dump($_SERVER);die();
     $router= new Router();
+
+    $router->get('mongo', 'UserController@mongo');
     // $router->get('', 'UserController@home');
     // $router->post('', 'UserController@home');
     $router->get('', 'UserController@index');
