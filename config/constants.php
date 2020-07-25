@@ -5,7 +5,8 @@
         'BDS'       =>      '../',
         'DSB'       =>      '/../',
         'BACK'      =>      '/../',
-        'PHP_EXT'   =>      '.php'
+        'PHP_EXT'   =>      '.php',
+        'SPACE'  	=> 		' ',
     ];
 
 ?>

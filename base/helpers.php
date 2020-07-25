@@ -46,13 +46,23 @@
 	{
 		$ex = new \Exception();
 		$files = [];
+		ini_set('error_reporting', false);
+		// vd($ex->getTrace());
 		foreach($ex->getTrace() as $file)
 			$files[] = [
-				'file' => $file['file'],
-				'line' => $file['line']
+				'file' => @$file['file'],
+				'line' => $file['line'],
+				'function' => file['function'],
+				'class' => file['class'],
 			];
 
 		vd($files);
+	}
+
+	function isAssoc(array $arr)
+	{
+	    if (array() === $arr) return false;
+	    return array_keys($arr) !== range(0, count($arr) - 1);
 	}
 
 
