@@ -5,7 +5,9 @@
 	{
 		protected $connection;
 		private $wheres = [];
+		private $orderBy = [];
 		private $select = '*';
+		private $limit;
 		private $isFirstWhere = true;
 		// private $table;
 		private $string;
@@ -69,6 +71,29 @@
 			// }
 			// if(count($this->wheres) == 2)
 			// 	vd($this->wheres);
+			$this->buildQuery();
+			return $this;
+		}
+
+		public function first()
+		{
+			$this->limit = 1;
+			$this->fetchType = 'obj';
+			$this->exec();
+			if(isset($this->results[0]))
+				return $this->results[0];
+			else return $this->results;
+
+		}
+
+		public function orderBy($column, $sorting = 'asc') {
+			if(!in_array($sorting, ['asc', 'desc']))
+				throw new \Error('Order parameter is incorrect');
+
+			$this->orderBy[] = [
+				'column' => $column,
+				'order' => $sorting
+			];
 			return $this;
 		}
 
@@ -134,6 +159,7 @@
 			$select = ($this->select == '*')? '*' : (is_string($this->select)) ? $this->select : implode(',', $this->select);
 			$query = sprintf($query, $select, $this->table);
 			$wheres = '';
+
 			if(count($this->wheres) == 1) {
 				$wh = $this->wheres[0];
 				if($this->isFirstWhere)
@@ -141,39 +167,38 @@
 				else $query .= " AND(" . $wh['column'] . " " . $wh['operator'] . " :" . $wh['column'] . ')';
 			}
 			else if(count($this->wheres) > 1) {
-				$cols = array_keys($this->wheres);
-				foreach ($cols as $k => &$v) {
-					$v = ':' . $v;
-				}
+				$v= [];
 				$query .= " WHERE (";
-				$query .= implode(',', array_keys($cols));
+				foreach ($this->wheres as &$wh) {
+					if(!array_key_exists(0, $wh)) {
+						if($this->isFirstWhere)
+							$v[] = "(" . $wh['column'] . " " . $wh['operator'] . ' :' . $wh['column'] . ")";
+					}
+				}
+				$query .= implode(" AND ", $v);
 				$query .= ")";
-				// $query .= " WHERE(?)";
-				// vd($query);
+			}
+
+			if(count($this->orderBy)) {
+				$query .= SPACE . 'ORDER BY' . SPACE;
+				foreach($this->orderBy as $row) {
+					$query .= $row['column'] . SPACE . $row['order'];
+				}
+			}
+
+			if(isset($this->limit)) {
+				$query .= SPACE . 'LIMIT' . SPACE . $this->limit;
 			}
 
 			$this->query = $query;
 			
-			// vd($this->connection->pdo);
-			// vd([$query, $wheres]);
-
-			// if(count($this->wheres) == 1)
-
-
-			// $arr = [
-			// 	$this->select,
-			// 	$this->table,
-			// 	$wheres
-			// ];
-
 		}
 
 		public function exec()
 		{
 			$this->buildQuery();
-			// vd($this->connection);
+			// vd($this->query);
 			$st = $this->connection->pdo->prepare($this->query);
-			vd($this->wheres);
 			foreach($this->wheres as $i => $where) {
 				$st->bindParam(':'.$where['column'], $where['value']);
 			}
