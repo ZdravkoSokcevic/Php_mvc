@@ -131,7 +131,7 @@
 
 			$success = file_put_contents($model_path, $model);
 			new ConsoleMessage('Model created successifully', 'success');
-			vd($success);
+			// vd($success);
 		}
 
 

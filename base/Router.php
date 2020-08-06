@@ -116,6 +116,8 @@ class Router implements Request {
 		} else {
 			$res = $ref->invokeArgs($controller, $args);
 		}
+		
+		$controller->render();
 
 		// echo $res;
 		// die();
