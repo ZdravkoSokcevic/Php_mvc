@@ -136,7 +136,7 @@
 			return $builder;
 		}
 
-		public function setFetchType(string $type):void 
+		public function setFetchType(string $type)
 		{
 			if(!in_array($type, array_keys($this->fetchTypes)))
 				throw new Exception('Arguments are invalid');
@@ -151,12 +151,16 @@
 
 		public function buildQuery()
 		{
-			$query = <<< 'EOQ'
+			$query = <<< EOQ
 				SELECT %s
-				FROM %s
-			EOQ;
+				FROM %s 
+EOQ;
 
-			$select = ($this->select == '*')? '*' : (is_string($this->select)) ? $this->select : implode(',', $this->select);
+			$select = '';
+			if($this->select != '*')
+				$select = (is_string($this->select)) ? $this->select : implode(',', $this->select);
+			else $select = '*';
+
 			$query = sprintf($query, $select, $this->table);
 			$wheres = '';
 
@@ -225,8 +229,6 @@
 		{
 			return $this->query;
 		}
-
-
 	}
 
-?>
+	?>
