@@ -31,6 +31,12 @@
     */
     define('ROOT', __DIR__ . '/./../../');
 
+    require_once ROOT . DS . 'core' . DS . 'framework' . DS . 'core_loader' . PHP_EXT;
+
+    require_once ROOT . DS . 'base' . DS . 'helpers' . PHP_EXT;
+    
+	require_once ROOT . DS . 'core' . DS . 'framework' . DS . 'Application' . PHP_EXT;
+
     /*
     |   Main autoloader function
     |   Here we need to include all 
@@ -47,18 +53,14 @@
     }
     unset($autoload_classes);
 
-    require_once ROOT . DS . 'core' . DS . 'framework' . DS . 'core_loader' . PHP_EXT;
-
-    require_once ROOT . DS . 'base' . DS . 'helpers' . PHP_EXT;
-    
-	require_once ROOT . DS . 'core' . DS . 'framework' . DS . 'Application' . PHP_EXT;
-
 	$app = new \App\Core\Framework\Application();
 
 	function app()
 	{
 		return $app;
 	}
+
+    $router = new Router();
 
     /* 
     |****************************************************************

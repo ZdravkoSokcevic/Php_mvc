@@ -9,7 +9,7 @@
 
 		public function serve()
 		{
-			$this->path = (isset($this->path) && !empty($this->path)) ? './' . $this->path : './routing';
+			$this->path = (isset($this->path) && !empty($this->path)) ? './' . $this->path : './webroot';
 			$commandString = "php -S $this->host:$this->port -t $this->path";
 			$out = [];
 			echo "\033[46m";
