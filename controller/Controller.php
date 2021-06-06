@@ -59,6 +59,7 @@
 			}
 			public function index()
 			{
+				dd('Tu si');
 				// Your code goes here
 			}
 

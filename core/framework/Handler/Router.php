@@ -1,6 +1,6 @@
 <?php
-require __DIR__ . '/./RequestTrait.php';
-require __DIR__ . '/./Request.php';
+// require __DIR__ . '/./RequestTrait.php';
+// require __DIR__ . '/./Request.php';
 class Router implements Request {
 	use RequestTrait;
 	// use RequestTrait {
@@ -134,11 +134,11 @@ class Router implements Request {
 	}
 
 	public function validateControllerExists() {
-		$controller_path = __DIR__ . '/../controller/';
+		$controller_path = ROOT . DS . './controller/';
 		$files = array_diff(scandir($controller_path), ['.', '..']);
 		foreach ($files as $file) {
 			if (explode('.', $file)[0] === $this->_controller) {
-				require_once __DIR__ . '/../controller/' . $file;
+				require_once ROOT . '/./controller/' . $file;
 				return;
 			}
 		}

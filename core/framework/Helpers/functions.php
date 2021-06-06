@@ -65,5 +65,40 @@
 	    return array_keys($arr) !== range(0, count($arr) - 1);
 	}
 
+	function mvc_autoloader()
+	{
+		$allowed_extensions = ['php'];
+		$core_folder = realpath(ROOT . DS . 'core');
+		$core_folder_files = [];
+		getDirContents($core_folder, $core_folder_files);
+		foreach($core_folder_files as $file) {
+			$parts = explode('.', $file);
+			$ext = $parts[count($parts) - 1];
+			if(isset($ext) && in_array($ext, $allowed_extensions))
+			{
+				if(file_exists($file) && !in_array($file, get_included_files()))
+					require_once $file;
+				else {
+					// var_dump($file);
+					// throw new \Exception('Fajl ne postoji ' . $file);
+				}
+			}
+		}
+	}
+
+	function require_file($file)
+	{
+		if(!is_string($file))
+			return;
+		$filename = $file;
+		if(strpos($file, '.'))
+		{
+			$filename = str_replace('php', '', $filename);
+			$filename = str_replace('.', '/', $filename);
+			$filename .= '.php';
+			@require_once ROOT . DS . $filename;
+		}
+	}
+
 
 ?>

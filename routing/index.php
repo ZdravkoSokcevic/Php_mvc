@@ -9,10 +9,10 @@
 	if(!defined('ROOT'))
         require_once __DIR__ . './../webroot/index.php';
 
-    $router->get('controller', 'PagesController@loadControllerPage');
+    $router->get('controller', 'Controller@index');
     $router->get('routing', 'PagesController@loadRoutingPage');
     $router->get('installation', 'PagesController@loadInstallationPage');
     $router->get('/{page}', 'PagesController@base');
-    $router->get('', 'PagesController@base');
+    $router->get('', 'Controller@loadMarkdown');
 
 ?>
