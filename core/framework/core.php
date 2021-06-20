@@ -34,12 +34,15 @@
     require_file('core.framework.core_loader');
     require_file('core.framework.Application');
 
-	$app = new \App\Core\Framework\Application();
+    /*
+    |--------------------------------------
+    |   Load config
+    |--------------------------------------
+    */
+    require_file('core.framework.Classes.Config');
+    $config = new Config();
 
-	function app()
-	{
-		return $app;
-	}
+	$app = new \App\Core\Framework\Application();
 
     $router = new Router();
 

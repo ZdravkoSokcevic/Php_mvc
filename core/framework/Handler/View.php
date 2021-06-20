@@ -40,12 +40,16 @@
 
 		protected function validateViewExists()
 		{
+			// $this->path = path($this->path);
+			// vd($path);
+			// if(!path($this->default_path) && $this->path == 'default' && !path($this->default_path))
+			// 	throw new \Exception('Folder or file doesn\'t exists at path');
 			// First we check if default path
 			if(($this->path == 'default' && !is_dir($this->default_path)) || !is_file($this->default_path . DS .  'index.php'))
 				throw new \Exception('Folder or file not exists in view folder');
 
-			if(!is_dir(ROOT . $this->default_path) && !is_file($this->default_path . DS . 'index.php'))
-				throw new \Exception('Folder '. $this->path . 'doesn\'t exists');
+			if(!is_dir(ROOT . $this->default_path) && !is_file($this->default_path . DS . 'index.php') && $this->path == 'default')
+				throw new \Exception('Folder '. $this->path . 'doesn\'t exists at ' . __FILE__ . ' ' . __LINE__ );
 
 			$this->path = str_replace(".","/", $this->path);
 			$full_path = ROOT . DS . 'views' . DS;
@@ -62,9 +66,9 @@
 			)
 				throw new \Exception('Folder ' . $this->path . ' doesn\'t exists');
 
-			// if(!strpos('.php' ,$full_path)) 
-			// 	$full_path .= '.php';
-
+			if(!strpos('.php' ,$full_path)) 
+				$full_path .= '.php';
+			// vd($full_path);
 			$this->path = $full_path;
 		}
 
@@ -79,15 +83,22 @@
 
 		public function renderHtml()
 		{
+			// If path is dir, then
+			// render generic index.php file
+			// otherwise render path file
 			if(is_dir($this->path))
 				$this->path .= DS . 'index' . PHP_EXT;
 
+			// If is file passed without extension
 			if(!strpos($this->path, '.php'))
 				$this->path .= PHP_EXT;
-
+			// vd(path($this->path));
 			extract($this->vars);
-
-			include_once $this->path;
+			if(!path($this->path)) {
+				require_file('core.framework.views.error');
+				die();
+			}
+			@require_once $this->path;
 			die();
 		}
 	}

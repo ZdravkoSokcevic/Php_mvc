@@ -1,0 +1,6 @@
++☐	Napisati u view-u, renderovanje za error, kada nema templejta
+☐	U render metodi/ u view, drugi parametar za vars
+☐	Napisati u Builderu logiku za SELECT ${select} FROM ${FROM} WHERE ${WHERE} ${LIMIT|ORDER BY}
+☐	Implement log files ${WARN|ERROR|LOG|INFO}
+☐	Implement loading internal scripts from core folder
+☐	Move base Controller in base folder

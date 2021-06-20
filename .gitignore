@@ -4,3 +4,4 @@ controller/*
 !model/Model.php
 model/*
 vendor/*
+composer.lock

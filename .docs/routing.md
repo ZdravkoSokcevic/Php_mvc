@@ -1,5 +1,3 @@
-#ROUTING
-
 ### All your routes are stored into `routing/index.php`
 
 <code>

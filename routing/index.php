@@ -9,7 +9,7 @@
 	if(!defined('ROOT'))
         require_once __DIR__ . './../webroot/index.php';
 
-    $router->get('controller', 'Controller@index');
+    $router->get('controller', 'ZdravkoController@index');
     $router->get('routing', 'PagesController@loadRoutingPage');
     $router->get('installation', 'PagesController@loadInstallationPage');
     $router->get('/{page}', 'PagesController@base');

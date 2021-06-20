@@ -9,6 +9,8 @@
         'BACK'      =>      '/../',
         'PHP_EXT'   =>      '.php',
         'SPACE'  	=> 		' ',
+        'DOT'       =>      '.', 
+        'FRAMEWORK' =>      realpath(__DIR__ . '/../'),
     ];
 
 ?>
