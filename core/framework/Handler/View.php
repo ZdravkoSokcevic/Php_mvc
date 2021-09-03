@@ -25,10 +25,14 @@
 			$this->{$key} = $val;
 		}
 
-		public function render($path = 'default')
+		public function render($path = 'default', array $vars = [])
 		{
 			$path_source = $path;
 			$this->path = $path;
+
+			// Add vars to existing vars array
+			foreach($vars as $key => $val)
+				$this->set($key, $val);
 
 			$this->validateViewExists();
 
